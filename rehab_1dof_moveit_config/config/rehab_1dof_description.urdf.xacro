@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rehab_1dof_description">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import rehab_1dof_description urdf file -->
+    <xacro:include filename="$(find rehab_1dof_description)/urdf/rehab_1dof_description.urdf" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="rehab_1dof_description.ros2_control.xacro" />
+
+
+    <xacro:rehab_1dof_description_ros2_control name="GazeboSimSystem" initial_positions_file="$(arg initial_positions_file)"/>
+    
+    <gazebo reference="base_link">
+      <material>Gazebo/Gray</material>
+    </gazebo>
+
+    <gazebo reference="arm_link">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+
+    <transmission name="shoulder_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="shoulder_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="shoulder_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    
+    <gazebo>
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+        <parameters>$(find rehab_1dof_moveit_config)/config/ros2_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="shoulder_ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <ros>
+            <namespace>/rehab_1dof</namespace>
+            <remapping>wrench:=shoulder_wrench</remapping>
+        </ros>
+        <body_name>arm_link</body_name>
+        <frame_name>world</frame_name>
+        <update_rate>100.0</update_rate>
+        <gaussian_noise>0.01</gaussian_noise>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="shoulder_control_wrench" filename="libgazebo_ros_force.so">
+            <ros>
+                <namespace>rehab_1dof</namespace>
+                <remapping>gazebo_ros_force:=shoulder_control_wrench</remapping>
+            </ros>
+            <link_name>arm_link</link_name>
+            <updateRate>100.0</updateRate>
+        </plugin>
+    </gazebo>
+
+</robot>

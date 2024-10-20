@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="rehab_1dof_description">
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.00021257 -0.31056 0.12052" rpy="0 0 0" />
+      <mass value="75.0" />
+      <inertia ixx="22.595" ixy="-7.4479E-07" ixz="1.5578E-07"
+       	       iyy="21.889" iyz="0.00070046" izz="43.742" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rehab_1dof_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.37647 0.47059 0.58824 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rehab_1dof_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <link
+    name="arm_link">
+    <inertial>
+      <origin
+        xyz="-0.25671 -0.055563 0.09829"
+        rpy="0 0 0" />
+      <mass
+        value="2.4366" />
+      <inertia
+        ixx="0.0031836"
+        ixy="-0.00018573"
+        ixz="0.00017661"
+        iyy="0.0030425"
+        iyz="-7.2918E-06"
+        izz="0.0042541" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rehab_1dof_description/meshes/arm_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.37647 0.58824 0.57647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rehab_1dof_description/meshes/arm_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="shoulder_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.193 0.89213"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="arm_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="1.571"
+      effort="200"
+      velocity="3" />
+  </joint>
+  <link
+    name="hand_link">
+    <inertial>
+      <origin
+        xyz="0.0024147 1.8041E-16 -1.1102E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.001885" />
+      <inertia
+        ixx="3.0241E-07"
+        ixy="-3.1019E-25"
+        ixz="-3.9705E-23"
+        iyy="1.5494E-07"
+        iyz="9.5384E-24"
+        izz="1.5494E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rehab_1dof_description/meshes/hand_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rehab_1dof_description/meshes/hand_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wrist_joint"
+    type="fixed">
+    <origin
+      xyz="-0.41941 -0.27382 0.12737"
+      rpy="1.5339 0 -0.28669" />
+    <parent
+      link="arm_link" />
+    <child
+      link="hand_link" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  
+  <link name="world"/>
+  <joint name="world_dummy_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="world" />
+    <child link="dummy_link" />
+  </joint>
+  
+  <link name="dummy_link"/>
+  <joint name="dummy_base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="dummy_link" />
+    <child link="base_link" />
+  </joint>
+  
+</robot>

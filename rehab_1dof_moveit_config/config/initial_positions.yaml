@@ -1,0 +1,4 @@
+# Default initial positions for rehab_1dof_description's ros2_control fake system
+
+initial_positions:
+  shoulder_joint: 0.0

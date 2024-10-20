@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: rehab_1dof_description
+    relative_path: urdf/rehab_1dof_description.urdf
+  srdf:
+    relative_path: config/rehab_1dof_description.srdf
+  package_settings:
+    author_name: nta
+    author_email: anh.nguyenthe3112@gmail.com
+    generated_timestamp: 1729361380
